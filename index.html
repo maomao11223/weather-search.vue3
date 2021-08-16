@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js" integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div class="search">
+      <input type="text" v-model="location">
+      <button @click="getInfo()">Search</button>
+    </div>
+    <div class="content" v-for="item in consolidated_weather.slice(1)">
+      <div>日期: {{ item.applicable_date }}</div>
+      <div>最高溫度: {{ Math.round(item.max_temp*100)/100 }}
+        <div class="chart">
+          <div class="chartMax" v-bind:style="{width:item.max_temp + '%'}"></div>
+        </div>
+      </div>
+      <div>最低溫度: {{ Math.round(item.min_temp*100)/100 }}
+        <div class="chart">
+          <div class="chartMin" v-bind:style="{'width':item.min_temp + '%'}"></div>
+        </div>
+      </div>
+      <div>濕度: {{ item.humidity }} %
+        <div class="pie">
+          <div class="pieHumidity" v-bind:style="{'background': 'conic-gradient(#6AAFE6 ' + item.humidity + '%' + ', #fff ' + 0 + '%' + ')'}">
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </div>
+</body>
+<script>
+const app = Vue.createApp({
+  data() {
+    return {
+      data: [],
+      location: "London",
+      woeid: "",
+      consolidated_weather: []
+    }
+  },
+  methods: {
+    getInfo() {
+      axios.get('https://api.allorigins.win/raw?url=https://www.metaweather.com/api/location/search/?query=' + this.location)
+    .then((response) => {
+      console.log(response);
+      this.woeid = response.data[0].woeid;
+
+      axios.get('https://api.allorigins.win/raw?url=https://www.metaweather.com/api/location/' + this.woeid)
+      .then((response) => {
+        this.data = response.data;
+        this.consolidated_weather = response.data.consolidated_weather;
+        console.log(this.consolidated_weather);
+      })
+    })
+    }
+  }
+}).mount('#app');
+</script>
+</html>

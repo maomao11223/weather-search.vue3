@@ -1,0 +1,75 @@
+*, *::after, *::before{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: rgb(255, 255, 255);
+  color: #566270;
+}
+
+.search{
+  display: flex;
+  margin-top: 20px;
+  width: 50vw;
+  height: 30px;
+  justify-content: center;
+}
+.search input{
+  padding-left: 10px;
+  border-color: #30A9DE;
+  border-radius: 10px 0px 0px 10px;
+}
+.search button{
+  padding: 5px;
+  border: none;
+  border-radius: 0px 10px 10px 0px;
+  background-color: #30A9DE;
+  color: aliceblue;
+}
+.content{
+  margin: 10px;
+  font-size: 18px;
+  align-items: center;
+}
+.chart{
+  background-color: #d6d4d4;
+  margin: 2px 0px;
+  padding: 4px;
+  box-sizing: border-box;
+  border: 1px solid #d6d4d4;
+  border-radius: 2px;
+}
+.chartMax, .chartMin{
+  width: 100%;
+  height: 10px;
+  border-radius: 2px;
+}
+.chartMax{
+  background-color: #E53A40;
+}
+.chartMin{
+  background-color: #30A9DE;
+}
+
+.pie{
+  width: 150px;
+  height: 150px;
+  box-shadow: 0 2px 10px 0 rgb(17, 0, 255);
+  border-radius: 50%;
+  margin: 10px auto;
+  padding: 5px;
+}
+.pieHumidity{
+  background: conic-gradient(#6AAFE6 60%, #fff 0);
+  height: 100%;
+  border-radius: 50%;
+}
+/*
+v-bind:style="{'background':conic-gradient(#6AAFE6 item.humidity + '%', #fff 0)}" */
+
+/* 'rgba(' + 207 + ',' 0 + ',' + 15 + ',' + 1 + ')' */
